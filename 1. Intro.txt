@@ -1,0 +1,39 @@
+Properties of Dynamic Programming
+
+1. Optimal Substructure : 
+    If we can write a
+    recurrence relation, then
+    a problem is said to have
+    optimal substructure.
+
+2. Overlapping Subproblem
+    If our subproblems
+    repeat, then a problem is
+    said to have overlapping
+    subproblem.
+
+Ways to handle Overlapping Subproblem:
+1. Memoization (Top-Down):
+    A lookup table is
+    maintained and checked
+    before computation of any
+    state. Recursion is
+    involved.
+
+Example: 
+
+    int fib[200]={-1};
+    int computefib(int n)
+    {
+        if(n==0 || n==1)return n;
+        if(fib[n]!=-1)return fib[n];
+        int res=fib[n-1]+fib[n-2];
+        fib[n]=res;
+        return res;
+    }
+
+KEY POINTS:
+
+1. Minimization and maximization problems are generally solved with dp where we
+    want exhaustive solution. ( Sometimes with binary search on answer).
+2. "Find the number of ways" is also a very popular type of DP problems.
