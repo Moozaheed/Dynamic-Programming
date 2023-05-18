@@ -39,7 +39,39 @@ using namespace std;
 const double PI = acos(-1);
 ll int hp = 1e9+7;
 
+// Problem: You are given an array. Find the length of LIS
 
+// We Define ;
+// Lis (i) = Length of longest increasing subsequence ending at 'i th' element
+// Therefore, Lis (i) depends on Lis (k), where O < k < i -1
+// if a[i]>a[k].
+// Then, Lis (i ) = max ( Lis (i), 1+ Lis (k)) (O < k < i -l )
+
+
+
+// Approach : (Using Tabulation)
+// ( 1 ) Make a dp array and initialize all the dp( i ) by l.
+// {Since single element is also an Lis}
+// ( 2 ) For every i from left to right, iterate from j = O to j = i-1
+
+// Checking
+// if(a[i]>a[j])
+// dp[i] = max( dp[i], 1+ dp[j])
+// ( 3 ) After loop ends, Output [ dp (n-1) ]
+
+
+int dp[maxx];
+int lis(int arr[],int n)
+{
+    if(dp[n]!=-1)return dp[n];
+    dp[n]=1;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[n]>arr[i])dp[n]=max(dp[n],1+lis(arr,i));
+    }
+
+    return dp[n];
+}
 
 
 void Boom()
@@ -48,16 +80,14 @@ void Boom()
 
     int n;
     cin>>n;
+    int arr[n];
 
-    vector<int>dp(n+10);
-    dp[0] = 0;
-    dp[1] = 1;
-    for(int i=2;i<=n;i++)
-    {
-        dp[i]=dp[i-1]+dp[i-2];
-    }
+    for(int i=0;i<n;i++)cin>>arr[i];
 
-    cout<< dp[n];
+    cout<<lis(arr,n-1);
+
+
+    
 
 
 
@@ -67,8 +97,10 @@ void Boom()
 int main()
 {
     Boost;
+    
+    for(int i=0;i<maxx;i++)dp[i]=-1;
 
-    int t=1;      // cin>>t;
+    int t=1;       //cin>>t;
     for(int i=1;i<=t;i++)
     {
         //cout<<"Case "<<i<<" : ";

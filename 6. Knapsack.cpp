@@ -33,13 +33,38 @@
 #define here fprintf(stderr, "====I am Here====\n");
 #define FOR(data) for(auto it=data.begin();it!=data.end();it++)
 #define Boost ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
-#define maxx 100005
+#define maxx 10005
 #define EPS 1e-9
 using namespace std;
 const double PI = acos(-1);
 ll int hp = 1e9+7;
 
 
+// Way Of Thinking
+// We iterate from left to right in iteams array. For each item we have 2 choices
+// 1. Take it remaining capacity of Knapsack
+// 2. Not take it Capacity rernains same
+// Let.
+//     f (n,w) = denotes the maximum value of items
+//     we can pick till item n and current capacity of knapsack w.
+    
+int val[maxx],wt[maxx];
+
+
+int dp[maxx][maxx];
+int knapsack(int n,int w)
+{
+
+    if(w<=0)return 0;
+    if(n<=0)return 0;
+
+    if(dp[n][w]!=-1)return dp[n][w];
+
+    if(wt[n-1]>w)dp[n][w] = knapsack(n-1,w);
+    else dp[n][w] = max(knapsack(n-1,w),knapsack(n-1,w-wt[n-1])+val[n-1]);
+
+    return dp[n][w];
+}
 
 
 void Boom()
@@ -49,17 +74,20 @@ void Boom()
     int n;
     cin>>n;
 
-    vector<int>dp(n+10);
-    dp[0] = 0;
-    dp[1] = 1;
-    for(int i=2;i<=n;i++)
+    for(int i=0;i<maxx;i++)
     {
-        dp[i]=dp[i-1]+dp[i-2];
+        for(int j=0;j<maxx;j++)
+        {
+            dp[i][j]=-1;
+        }
     }
 
-    cout<< dp[n];
+    for(int i=0;i<n;i++)cin>>wt[i];
+    for(int i=0;i<n;i++)cin>>val[i];
 
-
+    int w;
+    cin>>w;
+    cout<<knapsack(n,w)<<dl;
 
 
 }
