@@ -53,18 +53,41 @@ void Boom()
     for(int i=0;i<n;i++)cin>>arr[i];
 
     vi dp(n,1);
+    vi cnt(n,1);
     ll int ans=0;
 
     for(int i=1;i<n;i++)
     {
         for(int j=0;j<i;j++)
         {
-            if(arr[i]>arr[j]) dp[i]=max(dp[i],1+dp[j]);
+            if(arr[i]>arr[j])
+            {
+                if (dp[i] < dp[j] + 1) 
+                {
+                    dp[i] = dp[j] + 1;
+                    cnt[i] = cnt[j];
+                } 
+                else if (dp[i] == dp[j] + 1) 
+                {
+                    cnt[i] += cnt[j];
+                }
+
+            }
         }
         ans=max(ans,dp[i]);
     }
 
-    cout<<ans<<dl;
+    int sum=0;
+
+    for(int i=0;i<n;i++)
+    {
+        if(dp[i]==ans)
+        {
+            sum+=cnt[i];
+        }
+    }
+
+    cout<<sum<<dl;
 
 
 
